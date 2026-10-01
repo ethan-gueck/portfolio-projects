@@ -1,0 +1,47 @@
+/* controls.css: control panels, fields, buttons (after the site's solver/ampacity). */
+.panel {
+  margin: 0; padding: var(--space-3) var(--space-4) var(--space-4); min-width: 0;
+  border: 1px solid var(--rule); border-radius: var(--radius-md);
+  background: var(--surface); box-shadow: var(--shadow-paper);
+}
+.panel > legend, .panel__title {
+  padding: 0 var(--space-2); margin-left: calc(-1 * var(--space-2));
+  font-family: var(--font-sans); font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft);
+}
+
+/* Range + number field:  <div class="field"><label>..</label><input range><input number></div> */
+.field { display: grid; grid-template-columns: 1.6em minmax(0, 1fr) 5.2em; align-items: center; gap: var(--space-2) var(--space-3); padding: 0.2rem 0; font-family: var(--font-sans); font-size: var(--fs-sm); }
+.field > label { font-size: 1.15rem; color: var(--text); }
+.field input[type="range"] { width: 100%; accent-color: var(--primary); }
+.field input[type="number"], .select, .field select {
+  width: 100%; padding: 0.25rem 0.5rem; color: var(--text); background: var(--surface);
+  border: 1px solid var(--rule); border-radius: var(--radius-md); font-family: var(--font-sans); font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+output, .value { color: var(--primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.check { display: flex; align-items: center; gap: var(--space-2); padding: 0.15rem 0; font-family: var(--font-sans); font-size: var(--fs-sm); }
+.check input { accent-color: var(--primary); width: 1rem; height: 1rem; }
+.checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--space-3); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  padding: 0.4rem 0.9rem; border-radius: var(--radius-md);
+  border: 1px solid var(--rule); background: var(--surface); color: var(--text-soft);
+  font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn:hover { border-color: var(--primary); color: var(--primary); }
+.btn--primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); font-weight: 600; }
+.btn--primary:hover { background: var(--primary-soft); border-color: var(--primary-soft); color: #FFFFFF; }
+.btn--pill { border-radius: 999px; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.chips .btn { padding: 0.2rem 0.65rem; font-size: 0.8rem; }
+
+.error { margin: var(--space-2) 0 0; font-family: var(--font-sans); font-size: var(--fs-sm); color: #A4372C; }
+.inline { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--text-soft); }
+
+/* Value pulses briefly when it changes (same as the site's ampacity outputs). */
+.is-changed { animation: value-pulse 0.45s ease-out; }
+@keyframes value-pulse { 0% { color: var(--accent-strong); } 100% { color: var(--primary); } }

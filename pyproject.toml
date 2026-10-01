@@ -1,0 +1,29 @@
+[project]
+name = "portfolio-projects"
+version = "0.1.0"
+description = "Shared themes, styles, page builder and static API (general/) for Ethan Gueck's domain repos."
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+# The calculations, pages and API build use only the standard library.
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8"]
+# Manim videos. macOS system deps: brew install pkgconf cairo pango
+animations = ["manim>=0.19"]
+
+[tool.uv]
+# `uv sync` installs everything locally; CI uses `uv sync --only-group dev`.
+default-groups = ["dev", "animations"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["general"]
+
+[tool.pytest.ini_options]
+# Tests are discovered anywhere, so new topics are picked up without editing this file.
+norecursedirs = [".*", "_site", "output", "node_modules", "venv"]
+addopts = "-p no:cacheprovider"

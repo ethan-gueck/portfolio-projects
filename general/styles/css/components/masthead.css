@@ -1,0 +1,25 @@
+/* masthead.css: journal-style title band (after the site's header.css). */
+.masthead { background: var(--gradient-primary); color: var(--on-gradient); position: relative; overflow: hidden; }
+/* Faint contour rings, as on ethan-gueck.github.io. */
+.masthead::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-radial-gradient(circle at 88% 12%, transparent 0 38px, rgba(216,195,165,0.07) 38px 39px);
+}
+.masthead > * { position: relative; }
+.masthead__bar {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--space-3);
+  padding-block: var(--space-3);
+  font-family: var(--font-sans); font-size: var(--fs-sm);
+  border-bottom: 1px solid rgba(216,195,165,0.28);
+}
+.masthead__kicker { color: var(--accent); letter-spacing: 0.02em; }
+.masthead__bar a { color: var(--on-gradient); text-decoration: none; }
+.masthead__bar a:hover { color: var(--accent); text-decoration: underline; }
+.masthead__title {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-3) var(--space-5); padding-block: var(--space-5);
+}
+.masthead__name { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 400; letter-spacing: -0.015em; line-height: 1.05; color: #FFFFFF; }
+.masthead__subtitle { font-style: italic; font-size: var(--fs-md); max-width: 48ch; margin: var(--space-2) 0 0; color: var(--accent-soft); }
+.masthead__aside { color: #FFFFFF; font-size: var(--fs-lg); }
+@media (max-width: 720px) { .masthead__title { padding-block: var(--space-4); } }

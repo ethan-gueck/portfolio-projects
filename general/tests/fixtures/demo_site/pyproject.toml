@@ -1,0 +1,8 @@
+# A tiny project used by general/'s own tests: one topic, one module, one page.
+[project]
+name = "demo-site"
+version = "0.0.0"
+
+[tool.portfolio-site]
+title = "Demo"
+url = "https://example.test/demo/"

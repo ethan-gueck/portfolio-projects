@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="{{theme_name}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  {{head}}
+  <style>
+{{styles}}
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="container">
+      <div class="masthead__bar">
+        <span class="masthead__kicker">Ethan Gueck · Portfolio</span>
+        <a href="https://ethan-gueck.github.io/">ethan-gueck.github.io</a>
+      </div>
+      <div class="masthead__title">
+        <div>
+          <h1 class="masthead__name">{{title}}</h1>
+          <p class="masthead__subtitle">{{description}}</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container page-body">
+    <h2 class="section-title">Topics</h2>
+    <div class="cards">
+{{cards}}
+    </div>
+
+    <h2 class="section-title">Using the API</h2>
+    <p class="lede">Include the client once, then call functions or embed pages. Everything is static and served by GitHub Pages.</p>
+    <pre class="code"><code>&lt;script src="{{public_url}}api/v{{version}}/pp.js"&gt;&lt;/script&gt;
+&lt;div id="demo"&gt;&lt;/div&gt;
+&lt;script&gt;
+  // Compute
+  PP.call("{{module_id}}", "solve", 1, -3, 2).then(console.log);
+
+  // Embed an interactive page (auto-sized iframe)
+  PP.embed("#demo", "{{page_id}}", {{example}});
+
+  // Style your own markup with the shared theme + components
+  PP.useTheme("portfolio");
+&lt;/script&gt;</code></pre>
+    <p class="lede">Machine-readable listing: <a href="api/v{{version}}/manifest.json">api/v{{version}}/manifest.json</a></p>
+  </main>
+  <script id="pp-config" type="application/json">{{config}}</script>
+</body>
+</html>

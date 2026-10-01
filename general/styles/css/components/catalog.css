@@ -1,0 +1,17 @@
+/* catalog.css: topic cards and code blocks for index pages. */
+.section-title { font-size: var(--fs-lg); margin: var(--space-5) 0 var(--space-3); padding-bottom: var(--space-2); border-bottom: 2px solid var(--accent); }
+.section-title:first-child { margin-top: 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: var(--space-4); }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-md); box-shadow: var(--shadow-paper); padding: var(--space-4); }
+.card__kicker { font-family: var(--font-sans); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-strong); margin: 0 0 var(--space-1); }
+.card__title { font-size: var(--fs-md); color: var(--primary); margin-bottom: var(--space-2); }
+.card h4 { font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: 600; color: var(--text-soft); margin: var(--space-3) 0 var(--space-1); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card__alt { font-family: var(--font-sans); font-size: 0.8rem; color: var(--text-soft); }
+code { font-family: var(--font-mono); font-size: 0.88em; }
+.code {
+  margin: 0 0 var(--space-3); padding: var(--space-3) var(--space-4); overflow-x: auto;
+  background: var(--stage-gradient); color: var(--on-gradient); border-radius: var(--radius-md); box-shadow: var(--shadow-stage);
+  font-size: 0.95rem; line-height: 1.55;
+}
+.code code { font-size: 0.85rem; }

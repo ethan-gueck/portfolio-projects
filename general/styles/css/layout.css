@@ -1,0 +1,23 @@
+/* layout.css: page container and the stage + control-panel widget grid. */
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--space-4); }
+.page-body { padding-block: var(--space-5) var(--space-6); }
+.lede { max-width: var(--measure); color: var(--text-soft); margin-bottom: var(--space-4); }
+
+.widget { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-4); align-items: start; }
+.widget__main { min-width: 0; }
+.widget__side { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.widget__wide { grid-column: 1 / -1; }
+
+@media (max-width: 920px) {
+  .widget { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .container { padding-inline: var(--space-3); }
+  .page-body { padding-block: var(--space-4) var(--space-5); }
+}
+
+/* Embedded in an iframe (PP.embed): drop the masthead and outer padding. */
+.is-embedded .masthead { display: none; }
+.is-embedded .page-body { padding-block: 0; }
+.is-embedded .container { padding-inline: 0; }
+.is-embedded body, body.is-embedded { background: transparent; }

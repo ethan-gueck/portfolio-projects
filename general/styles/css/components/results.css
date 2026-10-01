@@ -1,0 +1,7 @@
+/* results.css: key/value results list. <dl class="results"><dt>..</dt><dd>..</dd></dl> */
+.results { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.3rem var(--space-3); margin: var(--space-2) 0 0; }
+.results dt { font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--text-soft); padding-top: 0.1rem; }
+.results dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.results .is-active { color: var(--primary); }
+.results dd.is-active { font-weight: 600; }
+.swatch { display: inline-block; width: 0.7em; height: 0.7em; border-radius: 50%; margin-right: 0.4em; vertical-align: 0.02em; box-shadow: 0 0 0 1px rgba(0,0,0,0.15); }

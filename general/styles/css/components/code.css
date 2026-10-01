@@ -1,0 +1,62 @@
+/* code.css: the "View the code" button and popup (web/code.py). */
+.panel__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+.panel__head .panel__title { margin: 0; }
+.code-open { display: inline-flex; align-items: center; gap: 0.45em; }
+.code-open svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.code-modal {
+  width: min(960px, calc(100vw - 2rem)); max-height: min(90vh, 1000px);
+  padding: 0; border: 0; border-radius: var(--radius-md); overflow: hidden;
+  background: var(--surface); color: var(--text);
+  box-shadow: 0 24px 60px rgba(7,42,32,0.4);
+}
+.code-modal[open] { display: flex; flex-direction: column; }
+.code-modal::backdrop { background: rgba(7,42,32,0.72); }
+.code-modal__head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--gradient-primary); color: var(--on-gradient); border-bottom: 3px solid var(--accent);
+}
+.code-modal__title { font-size: var(--fs-md); color: #FFFFFF; }
+.code-modal__close {
+  width: 36px; height: 36px; border-radius: 50%; border: 0; flex-shrink: 0;
+  display: grid; place-items: center; background: var(--accent); color: var(--primary-strong);
+}
+.code-modal__close svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2.4; fill: none; stroke-linecap: round; }
+.code-modal__tabs { display: flex; gap: var(--space-1); padding: var(--space-2) var(--space-4) 0; border-bottom: 1px solid var(--rule); background: var(--surface); }
+.code-modal__tab {
+  padding: 0.45rem 0.9rem; border: 1px solid transparent; border-bottom: 0; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: none; font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--text-soft);
+}
+.code-modal__tab[aria-selected="true"] { border-color: var(--rule); background: var(--bg); color: var(--primary); font-weight: 600; margin-bottom: -1px; }
+.code-modal__body { overflow-y: auto; padding: var(--space-3) var(--space-4) var(--space-4); background: var(--bg); }
+.code-modal__meta { font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--text-soft); margin: 0 0 var(--space-2); }
+.code-modal__index {
+  position: sticky; top: calc(-1 * var(--space-3)); z-index: 1;
+  display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0 calc(-1 * var(--space-4)) var(--space-3); padding: var(--space-2) var(--space-4);
+  background: var(--bg); border-bottom: 1px solid var(--rule);
+}
+.code-modal__chip {
+  font-family: var(--font-sans); font-size: 0.78rem; padding: 0.15rem 0.55rem; border-radius: 999px;
+  border: 1px solid var(--rule); background: var(--surface); color: var(--primary); text-decoration: none;
+}
+.code-modal__chip:hover { border-color: var(--primary); text-decoration: none; }
+
+.code-block { margin: 0 0 var(--space-3); scroll-margin-top: 4.5rem; }
+.code-block figcaption { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; color: var(--accent-strong); margin-bottom: 0.25rem; }
+.code-block pre {
+  margin: 0; padding: var(--space-3); overflow-x: auto; border-radius: var(--radius-md);
+  background: var(--primary-strong); color: #E9EFEC; border-left: 3px solid var(--accent);
+  font: 0.82rem/1.55 "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; tab-size: 4;
+}
+.tok-kw { color: #E6C98F; }
+.tok-str { color: #9FD6BE; }
+.tok-com { color: rgba(233,239,236,0.55); font-style: italic; }
+.tok-num { color: #F2C14E; }
+.tok-fn { color: #FFFFFF; font-weight: 600; }
+.tok-bi { color: #B9D9F0; }
+
+@media (max-width: 640px) {
+  .code-modal__head, .code-modal__tabs, .code-modal__body { padding-inline: var(--space-3); }
+  .code-modal__index { margin-inline: calc(-1 * var(--space-3)); padding-inline: var(--space-3); }
+}

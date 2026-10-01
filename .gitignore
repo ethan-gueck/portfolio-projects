@@ -1,0 +1,8 @@
+# Testing files and experimental directories:
+*/testing
+
+# Build output and caches:
+_site/
+__pycache__/
+.pytest_cache/
+.venv

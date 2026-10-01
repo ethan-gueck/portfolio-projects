@@ -1,0 +1,24 @@
+# Test the shared library on every push and pull request.
+# The domain repos (algebra, calculus, ...) build and deploy the Pages sites.
+name: Tests
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-node@v4   # runs the JS parse tests
+        with:
+          node-version: "20"
+      - run: uv sync --only-group dev   # skip Manim
+      - run: uv run --no-sync pytest -q

@@ -99,10 +99,10 @@ uv run python -m general manifest # print the manifest
 
 ## Adding a topic
 
-1. In the domain repo, copy `a1/` from the algebra repo, e.g. to `unit_circle/` in trigonometry. The folder path becomes the API id.
-2. Put the mathematical concept in `core/formula.py`, written the way it reads (no input checks, rounding cleanup or formatting); this is the only code the page's "View the code" popup shows. Build the solver on it in `core/`, with a `solve()` whose result has `to_dict()`.
+1. The mathematics goes in the neuron's section of the domain repo's `core/formula.py`, written the way it reads (no input checks, rounding cleanup or formatting); this is the only code the page's "View the code" popup shows (`CodeFile(..., only=(...))`).
+2. In the domain repo, add a topic folder (e.g. `unit_circle/` in trigonometry; the folder path becomes the API id) with a `solver.py` built on `core.formula`, whose `solve()` result has `to_dict()`. The algebra repo has worked examples.
 3. Write a JS mirror in `html/static/<topic>_math.js`, plus a parity test built on `general.jsrun`.
-4. Page: a template, plus `WIDGET.extend(...)` with the topic's CSS/JS. Scene: subclass `ThemedScene`.
+4. Page: a template, plus `WIDGET.extend(...)` with the topic's CSS/JS. The animation's show toggles go in the gear menu in the stage's corner: pass `show=(("grid", "Grid"), ...)` to `render_page` and put `{{stage_settings}}` inside `.stage`. Scene: subclass `ThemedScene`.
 5. Declare `TOPIC` in `api.py`, with `cards=("T.3",)` for the flashcards it covers. The build and tests pick it up automatically.
 
 ## Manim setup

@@ -73,7 +73,7 @@ BASE = Bundle(css=("base.css", "layout.css", "components/masthead.css", "compone
 # Interactive widget: stage + control panel + results + derivation steps.
 WIDGET = BASE.extend(
     css=("components/controls.css", "components/stage.css", "components/results.css", "components/steps.css"),
-    js=("params.js", "manim_canvas.js"),
+    js=("params.js", "manim_canvas.js", "stage_settings.js"),
 )
 
 __all__ = ["BASE", "WIDGET", "Bundle", "CSS_DIR", "JS_DIR", "read_assets", "resolve", "shared_assets"]

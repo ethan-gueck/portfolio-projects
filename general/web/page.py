@@ -6,8 +6,9 @@ fonts load from the network, with system fallbacks. Templates use ``{{name}}``
 placeholders; an unknown placeholder raises so typos surface early.
 
 Placeholders: title, head (font links), styles, scripts, config, footer,
-code_button, plus any ``extra`` values passed in. Pages that pass ``code``
-(web/code.py) put ``{{code_button}}`` where the "View the code" button goes. Every page gets the portfolio's call to action
+code_button, stage_settings, plus any ``extra`` values passed in. Pages that pass ``code``
+(web/code.py) put ``{{code_button}}`` where the "View the code" button goes; pages that pass
+``show`` (web/settings.py) put ``{{stage_settings}}`` inside their ``.stage`` for the gear menu. Every page gets the portfolio's call to action
 and footer (web/footer.py): at ``{{footer}}`` if the template has it,
 otherwise just before ``</body>``.
 """
@@ -23,6 +24,7 @@ from ..styles import WIDGET, Bundle
 from ..themes import DARK_MODES, Theme, get_theme
 from .code import CodeFile, code_viewer
 from .footer import site_footer
+from .settings import ShowOption, stage_settings
 
 # Dark mode before first paint, from the choice saved on ethan-gueck.github.io (same origin).
 _DARK_SNIPPET = (
@@ -60,17 +62,21 @@ def render_page(
     extra: dict[str, str] | None = None,
     footer: bool = True,
     code: list[CodeFile] | tuple[CodeFile, ...] = (),
+    show: list[ShowOption] | tuple[ShowOption, ...] = (),
 ) -> str:
     """Fill a template and return the full HTML document.
 
     ``config`` is embedded as JSON (``<script id="pp-config">``) with the
     theme's stage palette added under ``"theme"``. ``footer=False`` leaves out
     the call to action and footer. ``code`` lists the files shown in the
-    "View the code" popup.
+    "View the code" popup; ``show`` lists the animation's ``(key, label)``
+    toggles for the gear menu in the corner of the stage.
     """
     text = Path(template).read_text() if isinstance(template, Path) else template
     if code and "{{code_button}}" not in text:
         raise ValueError("Pages that pass `code` need a {{code_button}} placeholder in their template.")
+    if show and "{{stage_settings}}" not in text:
+        raise ValueError("Pages that pass `show` need a {{stage_settings}} placeholder inside their .stage.")
     button, dialog = code_viewer(code, title) if code else ("", "")
     theme = get_theme(theme)
     dark = DARK_MODES.get(theme.name)
@@ -86,6 +92,7 @@ def render_page(
         "theme_name": theme.name,
         "footer": dialog + (site_footer(title) if footer else ""),
         "code_button": button,
+        "stage_settings": stage_settings(show) if show else "",
         **(extra or {}),
     }
     document = fill_template(template, values)

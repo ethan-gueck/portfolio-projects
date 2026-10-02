@@ -31,3 +31,24 @@
 .video { margin-top: var(--space-4); }
 .video h2 { font-family: var(--font-sans); font-size: var(--fs-sm); font-weight: 600; color: var(--text-soft); margin-bottom: var(--space-2); }
 .video video { width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-stage); background: var(--stage-background); }
+
+/* Gear menu in the stage's top-right corner: the animation's "show" toggles (web/settings.py). */
+.stage-settings { position: absolute; top: var(--space-2); right: var(--space-2); z-index: 2; font-family: var(--font-sans); }
+.stage-settings__toggle {
+  list-style: none; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 999px; cursor: pointer;
+  color: var(--stage-text, #fff); background: color-mix(in srgb, var(--stage-background) 55%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  transition: background-color 0.15s ease, transform 0.3s ease;
+}
+.stage-settings__toggle::-webkit-details-marker { display: none; }
+.stage-settings__toggle:hover { background: color-mix(in srgb, var(--stage-background) 80%, transparent); }
+.stage-settings__toggle:focus-visible { outline: none; box-shadow: var(--focus); }
+.stage-settings[open] .stage-settings__toggle { transform: rotate(60deg); }
+.stage-settings__toggle svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.stage-settings__menu {
+  position: absolute; top: calc(100% + var(--space-2)); right: 0; min-width: 12rem; padding: var(--space-3);
+  background: var(--surface); color: var(--text); border: 1px solid var(--rule); border-radius: var(--radius-md);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+.stage-settings__title { margin: 0 0 var(--space-2); font-size: var(--fs-sm); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); }
+.stage-settings__checks { display: grid; gap: 0.1rem; }

@@ -87,3 +87,19 @@ def test_themes_without_a_dark_mode_are_left_alone(tmp_path):
     document = render_page(template, title="x", theme="manim", footer=False)
     assert ':root[data-mode="dark"]' not in document and "theme_dark" not in document
     assert "localStorage.getItem('pp-theme')" not in document
+
+
+def test_stage_settings_gear_menu():
+    from general.web import render_page, stage_settings
+
+    menu = stage_settings((("grid", "Grid"), ("labels", "Labels", False)))
+    assert 'class="stage-settings"' in menu and "<svg" in menu
+    assert '<input type="checkbox" data-show="grid" checked> Grid' in menu
+    assert '<input type="checkbox" data-show="labels"> Labels' in menu
+    page = render_page('<div class="stage">{{stage_settings}}</div>{{scripts}}', title="T", show=(("grid", "Grid"),), footer=False)
+    assert 'data-show="grid"' in page and "stage-settings[open]" in page  # menu markup and its closing script
+    assert render_page("<p>{{stage_settings}}</p>", title="T", footer=False) == "<p></p>"
+    import pytest
+
+    with pytest.raises(ValueError):
+        render_page("<p></p>", title="T", show=(("grid", "Grid"),), footer=False)

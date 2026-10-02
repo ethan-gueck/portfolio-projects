@@ -13,6 +13,7 @@ from __future__ import annotations
 import ast
 import html
 import io
+import itertools
 import keyword
 import re
 import tokenize
@@ -155,10 +156,10 @@ def python_sections(source: str, only: tuple[str, ...] = ()) -> list[tuple[str, 
             if name in only:
                 start = (node.decorator_list[0].lineno if getattr(node, "decorator_list", None) else node.lineno) - 1
                 found[name] = "".join(lines[start : node.end_lineno]).rstrip("\n")
-        if "module" in only:  # the overview: everything before the first definition
-            defs = [n for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))]
-            first = (defs[0].decorator_list[0].lineno if defs and defs[0].decorator_list else defs[0].lineno) if defs else len(lines) + 1
-            found["module"] = "".join(lines[: first - 1]).strip("\n")
+        if "module" in only:  # the overview: the docstring and imports, up to the first definition
+            # Section comments between the imports and the first def belong to the sections, not the overview.
+            head = list(itertools.takewhile(lambda n: not isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)), tree.body))
+            found["module"] = "".join(lines[: head[-1].end_lineno if head else 0]).strip("\n")
         missing = [n for n in only if n not in found]
         if missing:
             raise ValueError(f"Not defined at the top level of the file: {', '.join(missing)}")

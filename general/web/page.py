@@ -20,9 +20,15 @@ import re
 from pathlib import Path
 
 from ..styles import WIDGET, Bundle
-from ..themes import Theme, get_theme
+from ..themes import DARK_MODES, Theme, get_theme
 from .code import CodeFile, code_viewer
 from .footer import site_footer
+
+# Dark mode before first paint, from the choice saved on ethan-gueck.github.io (same origin).
+_DARK_SNIPPET = (
+    "\n  <script>try { if (localStorage.getItem('pp-theme') === 'dark') "
+    "document.documentElement.dataset.mode = 'dark'; } catch (e) {}</script>"
+)
 
 _PLACEHOLDER = re.compile(r"\{\{(\w+)\}\}")
 
@@ -67,11 +73,14 @@ def render_page(
         raise ValueError("Pages that pass `code` need a {{code_button}} placeholder in their template.")
     button, dialog = code_viewer(code, title) if code else ("", "")
     theme = get_theme(theme)
+    dark = DARK_MODES.get(theme.name)
     config = {**(config or {}), "theme": theme.to_dict()}
+    if dark:
+        config["theme_dark"] = dark.to_dict()
     values = {
         "title": html.escape(title),
-        "head": theme.head_links(),
-        "styles": bundle.css_text(theme),
+        "head": theme.head_links() + (_DARK_SNIPPET if dark else ""),
+        "styles": bundle.css_text(theme) + ("\n" + dark.css(':root[data-mode="dark"]') if dark else ""),
         "scripts": bundle.js_text(),
         "config": json_for_script(config),
         "theme_name": theme.name,

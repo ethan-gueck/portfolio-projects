@@ -69,3 +69,21 @@ def test_footer_placeholder_places_it(tmp_path):
 def test_unknown_placeholder_raises():
     with pytest.raises(KeyError):
         fill_template("{{nope}}", {})
+
+
+def test_portfolio_pages_carry_a_dark_mode(tmp_path):
+    template = tmp_path / "t.html"
+    template.write_text("<head>{{head}}<style>{{styles}}</style></head><body><script id='c'>{{config}}</script></body>")
+    document = render_page(template, title="x", footer=False)
+    assert ':root[data-mode="dark"]' in document and "--accent: #e5a93c" in document
+    assert "localStorage.getItem('pp-theme')" in document  # applied before first paint
+    config = json.loads(document.split("<script id='c'>")[1].split("</script>")[0])
+    assert config["theme_dark"]["stage"]["highlight"] == "#e5a93c" and config["theme"]["name"] == "portfolio"
+
+
+def test_themes_without_a_dark_mode_are_left_alone(tmp_path):
+    template = tmp_path / "t.html"
+    template.write_text("<head>{{head}}<style>{{styles}}</style></head><body>{{config}}</body>")
+    document = render_page(template, title="x", theme="manim", footer=False)
+    assert ':root[data-mode="dark"]' not in document and "theme_dark" not in document
+    assert "localStorage.getItem('pp-theme')" not in document

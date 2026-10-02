@@ -8,10 +8,10 @@
   width: min(960px, calc(100vw - 2rem)); max-height: min(90vh, 1000px);
   padding: 0; border: 0; border-radius: var(--radius-md); overflow: hidden;
   background: var(--surface); color: var(--text);
-  box-shadow: 0 24px 60px rgba(7,42,32,0.4);
+  box-shadow: 0 24px 60px color-mix(in srgb, var(--primary-strong) 40%, transparent);
 }
 .code-modal[open] { display: flex; flex-direction: column; }
-.code-modal::backdrop { background: rgba(7,42,32,0.72); }
+.code-modal::backdrop { background: color-mix(in srgb, var(--primary-strong) 72%, transparent); }
 .code-modal__head {
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
   padding: var(--space-3) var(--space-4);

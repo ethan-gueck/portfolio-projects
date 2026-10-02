@@ -13,7 +13,7 @@
   padding: 0.8rem 1.5rem; border-radius: 999px; border: 0;
   font-family: var(--font-sans); font-weight: 600; font-size: 1rem;
   background: var(--accent); color: var(--stage-background);
-  box-shadow: 0 0 0 5px rgba(216,195,165,0.2), 0 10px 24px rgba(0,0,0,0.35);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 20%, transparent), 0 10px 24px rgba(0,0,0,0.35);
   transition: transform 0.15s ease, background-color 0.15s ease;
 }
 .stage__run:hover { background: #FFFFFF; transform: translate(-50%, -50%) scale(1.04); }
@@ -24,7 +24,7 @@
 
 .narration {
   min-height: 2.7em; margin-top: var(--space-3); padding: 0.45rem 0.75rem;
-  background: rgba(216,195,165,0.16); border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, transparent); border-left: 3px solid var(--accent);
   font-variant-numeric: tabular-nums;
 }
 

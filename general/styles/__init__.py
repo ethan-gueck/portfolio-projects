@@ -68,7 +68,7 @@ class Bundle:
         return read_assets(self.js, "js")
 
 
-BASE = Bundle(css=("base.css", "layout.css", "components/masthead.css", "components/code.css", "components/site-footer.css"), js=("frame.js",))
+BASE = Bundle(css=("base.css", "layout.css", "components/masthead.css", "components/code.css", "components/site-footer.css", "components/dark.css"), js=("mode.js", "frame.js"))
 
 # Interactive widget: stage + control panel + results + derivation steps.
 WIDGET = BASE.extend(

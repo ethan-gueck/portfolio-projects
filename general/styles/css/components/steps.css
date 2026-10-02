@@ -7,7 +7,7 @@
   width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center;
   background: var(--gradient-primary); color: var(--accent);
   font-family: var(--font-sans); font-weight: 600; font-size: 0.9rem;
-  box-shadow: 0 0 0 3px rgba(216,195,165,0.35);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 .steps__item:not(:last-child)::after {
   content: ""; position: absolute; left: 0.95rem; top: 2.15rem; bottom: 0.2rem; width: 2px; background: var(--rule);
@@ -15,7 +15,7 @@
 .steps__title { font-family: var(--font-sans); font-weight: 600; color: var(--primary); margin: 0 0 0.15rem; font-size: 0.95rem; }
 .steps__math {
   margin: 0; padding: 0.35rem 0.65rem; overflow-x: auto;
-  background: rgba(216,195,165,0.16); border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, transparent); border-left: 3px solid var(--accent);
   font-size: 1rem; font-variant-numeric: tabular-nums;
 }
 .steps__item.is-active::before { background: var(--accent); color: var(--primary-strong); }

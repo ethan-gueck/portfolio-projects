@@ -1,0 +1,9 @@
+/* dark.css: the few component colours that can't follow theme tokens alone in dark mode
+   ([data-mode="dark"], see styles/js/mode.js). Tokens themselves come from PORTFOLIO_DARK. */
+[data-mode="dark"] .btn--primary:hover { color: var(--on-primary); }
+[data-mode="dark"] .stage__run:hover { background: var(--accent-soft); }
+[data-mode="dark"] .error { color: #f3a77a; }
+[data-mode="dark"] .cta__btn--primary:hover { background: var(--accent-soft); }
+[data-mode="dark"] .contact-bar { background: linear-gradient(90deg, #0c2236 0%, #1b334c 45%, #334e68 100%); }
+/* Faint accent tints read as olive over navy; use a pale blue tint instead. */
+[data-mode="dark"] .steps__math, [data-mode="dark"] .narration { background: rgba(159, 179, 200, 0.08); }

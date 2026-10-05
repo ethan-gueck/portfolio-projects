@@ -23,13 +23,17 @@ from pathlib import Path
 from ..styles import WIDGET, Bundle
 from ..themes import DARK_MODES, Theme, get_theme
 from .code import CodeFile, code_viewer
+from .favicon import favicon_link
 from .footer import site_footer
 from .settings import ShowOption, stage_settings
 
-# Dark mode before first paint, from the choice saved on ethan-gueck.github.io (same origin).
+# Dark mode (and the dark tab icon) before first paint, from the choice saved on
+# ethan-gueck.github.io or the page's own theme button (same origin, same key).
 _DARK_SNIPPET = (
-    "\n  <script>try { if (localStorage.getItem('pp-theme') === 'dark') "
-    "document.documentElement.dataset.mode = 'dark'; } catch (e) {}</script>"
+    "\n  <script>try { if (localStorage.getItem('pp-theme') === 'dark') { "
+    "document.documentElement.dataset.mode = 'dark'; "
+    "var i = document.querySelector('link[rel=\"icon\"][data-dark]'); if (i) i.href = i.dataset.dark; "
+    "} } catch (e) {}</script>"
 )
 
 _PLACEHOLDER = re.compile(r"\{\{(\w+)\}\}")
@@ -85,7 +89,7 @@ def render_page(
         config["theme_dark"] = dark.to_dict()
     values = {
         "title": html.escape(title),
-        "head": theme.head_links() + (_DARK_SNIPPET if dark else ""),
+        "head": theme.head_links() + favicon_link() + (_DARK_SNIPPET if dark else ""),
         "styles": bundle.css_text(theme) + ("\n" + dark.css(':root[data-mode="dark"]') if dark else ""),
         "scripts": bundle.js_text(),
         "config": json_for_script(config),

@@ -23,3 +23,20 @@
 .masthead__subtitle { font-style: italic; font-size: var(--fs-md); max-width: 48ch; margin: var(--space-2) 0 0; color: var(--accent-soft); }
 .masthead__aside { color: #FFFFFF; font-size: var(--fs-lg); }
 @media (max-width: 720px) { .masthead__title { padding-block: var(--space-4); } }
+
+/* Light / dark toggle (added to the bar by styles/js/mode.js), as on ethan-gueck.github.io. */
+.masthead__actions { display: inline-flex; align-items: center; gap: var(--space-3); }
+.theme-toggle {
+  flex-shrink: 0; width: 32px; height: 32px; display: grid; place-items: center; padding: 0;
+  border-radius: 50%; cursor: pointer; color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); background: rgba(255, 255, 255, 0.06);
+  transition: background-color 0.15s ease;
+}
+.theme-toggle:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+.theme-toggle:focus-visible { outline: none; box-shadow: var(--focus); }
+.theme-toggle svg { width: 17px; height: 17px; grid-area: 1 / 1; }
+.theme-toggle__moon { fill: currentColor; stroke: none; }
+.theme-toggle__sun { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; display: none; }
+.theme-toggle__sun circle { fill: currentColor; }
+[data-mode="dark"] .theme-toggle__moon { display: none; }
+[data-mode="dark"] .theme-toggle__sun { display: block; }

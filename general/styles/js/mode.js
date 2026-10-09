@@ -38,10 +38,10 @@
     try { global.localStorage.setItem(KEY, dark ? "light" : "dark"); } catch (e) { return; }
     global.location.reload();
   });
-  // Keep the bar's two ends: the kicker on the left, the site link and the button on the right.
+  // Keep the bar's two ends: the back link and kicker on the left, the site link and the button on the right.
   const actions = document.createElement("span");
   actions.className = "masthead__actions";
-  const link = bar.querySelector(":scope > a");
+  const link = bar.querySelector(":scope > a:not(.masthead__back)");
   if (link) actions.appendChild(link);
   actions.appendChild(button);
   bar.appendChild(actions);

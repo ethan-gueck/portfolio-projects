@@ -56,6 +56,22 @@ def fill_template(template: str | Path, values: dict[str, str]) -> str:
     return _PLACEHOLDER.sub(substitute, text)
 
 
+# The way back to the network on the portfolio, at the top left of every formula page.
+BACK_LINK = (
+    '<a class="masthead__back" href="https://ethan-gueck.github.io/#nn">'
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+    "Back to Ethan's NN</a>"
+)
+_BAR = re.compile(r'(<div class="masthead__bar">)')
+
+
+def add_back_link(document: str) -> str:
+    """Insert BACK_LINK as the first item of the masthead bar (once; pages without a bar are unchanged)."""
+    if 'class="masthead__back"' in document:  # already there (the class name alone also appears in the CSS)
+        return document
+    return _BAR.sub(lambda m: m.group(1) + "\n        " + BACK_LINK, document, count=1)
+
+
 def render_page(
     template: str | Path,
     *,
@@ -67,6 +83,7 @@ def render_page(
     footer: bool = True,
     code: list[CodeFile] | tuple[CodeFile, ...] = (),
     show: list[ShowOption] | tuple[ShowOption, ...] = (),
+    back: bool = True,
 ) -> str:
     """Fill a template and return the full HTML document.
 
@@ -74,7 +91,9 @@ def render_page(
     theme's stage palette added under ``"theme"``. ``footer=False`` leaves out
     the call to action and footer. ``code`` lists the files shown in the
     "View the code" popup; ``show`` lists the animation's ``(key, label)``
-    toggles for the gear menu in the corner of the stage.
+    toggles for the gear menu in the corner of the stage. ``back=True`` (the default) puts a
+    "Back to Ethan's NN" link at the start of the masthead bar, so every formula page leads back
+    to the network its neuron sits in.
     """
     text = Path(template).read_text() if isinstance(template, Path) else template
     if code and "{{code_button}}" not in text:
@@ -100,6 +119,8 @@ def render_page(
         **(extra or {}),
     }
     document = fill_template(template, values)
+    if back:
+        document = add_back_link(document)
     if (footer or dialog) and "{{footer}}" not in text and "</body>" in document:
         head, _, tail = document.rpartition("</body>")
         document = head + values["footer"] + "</body>" + tail

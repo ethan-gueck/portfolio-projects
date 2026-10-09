@@ -40,3 +40,16 @@
 .theme-toggle__sun circle { fill: currentColor; }
 [data-mode="dark"] .theme-toggle__moon { display: none; }
 [data-mode="dark"] .theme-toggle__sun { display: block; }
+
+/* Back to Ethan's NN: a pill at the top left of every formula page (web/page.py add_back_link). */
+.masthead__bar .masthead__back {
+  display: inline-flex; align-items: center; gap: 0.35rem; flex-shrink: 0;
+  padding: 0.3rem 0.8rem; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); background: rgba(255, 255, 255, 0.06);
+  color: var(--on-gradient); text-decoration: none; font-weight: 500;
+}
+.masthead__bar .masthead__back:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--on-gradient); text-decoration: none; }
+.masthead__back svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* With the pill first, the kicker sits beside it and the site link stays at the right. */
+.masthead__back + .masthead__kicker { margin-right: auto; }
+@media (max-width: 560px) { .masthead__back + .masthead__kicker { display: none; } }

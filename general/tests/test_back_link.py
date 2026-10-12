@@ -23,3 +23,11 @@ def test_back_link_can_be_left_out_and_is_never_doubled():
 
 def test_pages_without_a_bar_are_unchanged():
     assert add_back_link("<p>no bar</p>") == "<p>no bar</p>"
+
+
+def test_back_link_returns_to_an_open_portfolio_tab():
+    """The script after the link asks the portfolio tab (BroadcastChannel 'ethans-nn') to show the NN."""
+    document = render_page(TEMPLATE, title="T")
+    after = document.split(BACK_LINK, 1)[1]
+    assert after.startswith("<script>") and "BroadcastChannel('ethans-nn')" in after
+    assert "'where-is-nn'" in after and "'show-nn'" in after and "window.close()" in after

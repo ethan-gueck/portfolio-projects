@@ -57,11 +57,34 @@ def fill_template(template: str | Path, values: dict[str, str]) -> str:
 
 
 # The way back to the network on the portfolio, at the top left of every formula page.
+# Formula pages open in a new tab from the NN. When the portfolio is still open in another tab (same
+# origin, so they can talk over a BroadcastChannel), "Back" switches that tab to the NN and closes this
+# one, which returns the reader to it; when no portfolio tab answers, or this tab cannot be closed,
+# this tab goes to the NN itself. The portfolio's half is in its modules/nn.js.
 BACK_LINK = (
     '<a class="masthead__back" href="https://ethan-gueck.github.io/#nn">'
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
     "Back to Ethan's NN</a>"
 )
+BACK_SCRIPT = """<script>(function () {
+  var link = document.currentScript.previousElementSibling;
+  if (!link || !('BroadcastChannel' in window)) return;
+  link.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;   // a new tab or window was asked for
+    e.preventDefault();
+    var channel = new BroadcastChannel('ethans-nn'), done = false, answered = false;
+    var go = function () { if (!done) { done = true; channel.close(); location.href = link.href; } };
+    channel.onmessage = function (m) {
+      if (!m.data || m.data.type !== 'nn-here' || answered) return;
+      answered = true;
+      channel.postMessage({ type: 'show-nn' });
+      window.close();
+      setTimeout(go, 300);   // still here: the browser kept this tab open
+    };
+    channel.postMessage({ type: 'where-is-nn' });
+    setTimeout(function () { if (!answered) go(); }, 400);   // no portfolio tab answered
+  });
+})();</script>"""
 _BAR = re.compile(r'(<div class="masthead__bar">)')
 
 
@@ -69,7 +92,7 @@ def add_back_link(document: str) -> str:
     """Insert BACK_LINK as the first item of the masthead bar (once; pages without a bar are unchanged)."""
     if 'class="masthead__back"' in document:  # already there (the class name alone also appears in the CSS)
         return document
-    return _BAR.sub(lambda m: m.group(1) + "\n        " + BACK_LINK, document, count=1)
+    return _BAR.sub(lambda m: m.group(1) + "\n        " + BACK_LINK + BACK_SCRIPT, document, count=1)
 
 
 def render_page(
